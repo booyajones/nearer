@@ -37,6 +37,16 @@
     --mood-gratitude:#C77B3E;
     --mood-hope:#5E8C61;
     --mood-peace:#8FAF9E;
+    --emo-anxious:var(--mood-anxious);
+    --emo-fear:var(--mood-fear);
+    --emo-grief:var(--mood-grief);
+    --emo-lonely:var(--mood-lonely);
+    --emo-anger:var(--mood-anger);
+    --emo-doubt:var(--mood-doubt);
+    --emo-joy:var(--mood-joy);
+    --emo-gratitude:var(--mood-gratitude);
+    --emo-hope:var(--mood-hope);
+    --emo-peace:var(--mood-peace);
   }
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -429,11 +439,14 @@
     gap:10px;
   }
   .mood-chip{
+    --emo:#6E8CA0;
     border-radius:14px;
     padding:16px 14px;
     cursor:pointer;
-    border:1px solid transparent;
-    color:#fff;
+    border:1px solid color-mix(in srgb, var(--emo) 28%, transparent);
+    border-left:5px solid var(--emo);
+    background:color-mix(in srgb, var(--emo) 14%, var(--card));
+    color:color-mix(in srgb, var(--emo) 55%, #14110F);
     font-family:'Fraunces',serif;
     font-weight:600;
     font-size:16px;
@@ -441,17 +454,26 @@
     min-height:64px;
     display:flex;
     align-items:flex-end;
-    transition:transform 0.15s ease;
+    transition:transform 0.15s ease, background 0.2s ease;
   }
+  .mood-chip:hover{background:color-mix(in srgb, var(--emo) 22%, var(--card));}
   .mood-chip:active{transform:scale(0.97);}
   .mood-chip .mood-label{position:relative;z-index:1;}
-  .mood-chip::before{
-    content:"";
-    position:absolute; inset:0;
-    border-radius:14px;
-    background:inherit;
-    filter:brightness(0.92);
+  .mood-chip::after{
+    content:""; position:absolute; top:12px; right:12px;
+    width:9px; height:9px; border-radius:50%; background:var(--emo);
   }
+  body.dark .mood-chip{
+    background:color-mix(in srgb, var(--emo) 20%, var(--card));
+    color:color-mix(in srgb, var(--emo) 40%, #F5EFE6);
+    border-color:color-mix(in srgb, var(--emo) 35%, transparent);
+    border-left-color:var(--emo);
+  }
+  .flow-top{ border-bottom:2px solid color-mix(in srgb, var(--flow-color) 45%, transparent); padding-bottom:8px; }
+  .flow-card{ background:linear-gradient(180deg, color-mix(in srgb, var(--flow-color) 10%, var(--card)), var(--card) 60%) !important; }
+  .flow-eyebrow, .flow-ref{ color:color-mix(in srgb, var(--flow-color) 70%, #14110F) !important; }
+  body.dark .flow-eyebrow, body.dark .flow-ref{ color:color-mix(in srgb, var(--flow-color) 45%, #F5EFE6) !important; }
+  .flow-next.primary{ background:color-mix(in srgb, var(--flow-color) 80%, #14110F) !important; }
 
   /* ---------- nav tabs ---------- */
   .tabbar{
@@ -3927,7 +3949,7 @@ function renderToday(){
       </div>
       <div class="mood-grid">
         ${TODAY_FEELINGS.map(f => `
-          <div class="mood-chip" style="background:${f.color}" data-feeling="${f.id}">
+          <div class="mood-chip emo-chip" style="--emo:${f.color}" data-feeling="${f.id}">
             <span class="mood-label">${f.label}</span>
           </div>
         `).join('')}
@@ -4271,7 +4293,7 @@ function renderFeelings(){
       </div>
       <div class="mood-grid">
         ${FEELINGS.map(f => `
-          <div class="mood-chip" style="background:${f.color}" data-feeling="${f.id}">
+          <div class="mood-chip emo-chip" style="--emo:${f.color}" data-feeling="${f.id}">
             <span class="mood-label">${f.label}</span>
           </div>
         `).join('')}
