@@ -449,16 +449,22 @@
     color:color-mix(in srgb, var(--emo) 45%, #14110F);
     font-family:'Fraunces',serif;
     font-weight:600;
-    font-size:16px;
+    font-size:19px;
     position:relative;
-    min-height:64px;
+    min-height:118px;
     display:flex;
-    align-items:flex-end;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:8px;
+    min-width:0;
     transition:transform 0.15s ease, background 0.2s ease;
   }
   .mood-chip:hover{background:color-mix(in srgb, var(--emo) 22%, var(--card));}
   .mood-chip:active{transform:scale(0.97);}
-  .mood-chip .mood-label{position:relative;z-index:1;}
+  .mood-chip .mood-label{position:relative;z-index:1;overflow-wrap:anywhere;}
+  .mood-chip .mood-emoji{font-size:36px;line-height:1;position:relative;z-index:1;}
+  .mood-grid{padding-bottom:8px;}
   .mood-chip::after{
     content:""; position:absolute; top:12px; right:12px;
     width:9px; height:9px; border-radius:50%; background:var(--emo);
@@ -1424,9 +1430,9 @@
       grid-template-columns:repeat(4,1fr);
     }
     .mood-chip{
-      min-height:86px;
+      min-height:130px;
       padding:18px 16px;
-      font-size:17px;
+      font-size:20px;
     }
     .tabbar-wrap .tabbar{
       max-width:620px;
@@ -1435,7 +1441,7 @@
 
   @media (max-width:360px){
     #content{
-      padding-bottom:calc(96px + env(safe-area-inset-bottom));
+      padding-bottom:calc(140px + env(safe-area-inset-bottom));
     }
     .topbar{
       padding:calc(16px + env(safe-area-inset-top)) 14px 6px 14px;
@@ -1471,9 +1477,9 @@
       gap:8px;
     }
     .mood-chip{
-      min-height:58px;
+      min-height:110px;
       padding:12px;
-      font-size:15px;
+      font-size:17px;
     }
     .tabbar-wrap{
       padding:0 10px calc(12px + env(safe-area-inset-bottom)) 10px;
@@ -3565,61 +3571,61 @@ const DAILY_VERSES = [
 ];
 
 const FEELINGS = [
-  {id:"anxious", label:"Anxious", color:"var(--mood-anxious)", verses:[
+  {id:"anxious", emoji:"😰", label:"Anxious", color:"var(--mood-anxious)", verses:[
     {ref:"Philippians 4:6-7", text:"In nothing be anxious, but in everything, by prayer and petition with thanksgiving, let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your thoughts."},
     {ref:"1 Peter 5:7", text:"Casting all your worries on him, because he cares for you."},
     {ref:"Matthew 6:34", text:"Therefore don't be anxious for tomorrow, for tomorrow will be anxious for itself. Each day's own evil is sufficient."},
     {ref:"Psalm 94:19", text:"In the multitude of my thoughts within me, your comforts delight my soul."}
   ]},
-  {id:"fear", label:"Afraid", color:"var(--mood-fear)", verses:[
+  {id:"fear", emoji:"😨", label:"Afraid", color:"var(--mood-fear)", verses:[
     {ref:"Isaiah 41:10", text:"Don't be afraid, for I am with you. Don't be dismayed, for I am your God. I will strengthen you. I will help you."},
     {ref:"2 Timothy 1:7", text:"For God didn't give us a spirit of fear, but of power, love, and self-control."},
     {ref:"Psalm 27:1", text:"Yahweh is my light and my salvation. Whom shall I fear? Yahweh is the strength of my life. Of whom shall I be afraid?"},
     {ref:"Joshua 1:9", text:"Haven't I commanded you? Be strong and courageous. Don't be afraid. Don't be dismayed, for Yahweh your God is with you wherever you go."}
   ]},
-  {id:"grief", label:"Grieving", color:"var(--mood-grief)", verses:[
+  {id:"grief", emoji:"😢", label:"Grieving", color:"var(--mood-grief)", verses:[
     {ref:"Psalm 34:18", text:"Yahweh is near to those who have a broken heart, and saves those who have a crushed spirit."},
     {ref:"Matthew 5:4", text:"Blessed are those who mourn, for they shall be comforted."},
     {ref:"Revelation 21:4", text:"He will wipe away every tear from their eyes. Death will be no more; neither will there be mourning, nor crying, nor pain, anymore."},
     {ref:"Psalm 147:3", text:"He heals the broken in heart, and binds up their wounds."}
   ]},
-  {id:"lonely", label:"Lonely", color:"var(--mood-lonely)", verses:[
+  {id:"lonely", emoji:"🥺", label:"Lonely", color:"var(--mood-lonely)", verses:[
     {ref:"Deuteronomy 31:6", text:"Be strong and courageous. Don't be afraid, nor be scared of them: for Yahweh your God himself is who goes with you. He will not fail you nor forsake you."},
     {ref:"Psalm 68:6", text:"God sets the lonely in families."},
     {ref:"Hebrews 13:5", text:"I will in no way leave you, neither will I in any way forsake you."},
     {ref:"Isaiah 41:9-10", text:"You are my servant, I have chosen you and not cast you away. Don't be afraid, for I am with you."}
   ]},
-  {id:"anger", label:"Angry", color:"var(--mood-anger)", verses:[
+  {id:"anger", emoji:"😠", label:"Angry", color:"var(--mood-anger)", verses:[
     {ref:"Ephesians 4:26", text:"Be angry, and don't sin. Don't let the sun go down on your wrath."},
     {ref:"James 1:19-20", text:"Let every man be swift to hear, slow to speak, and slow to anger; for the anger of man doesn't produce the righteousness of God."},
     {ref:"Proverbs 15:1", text:"A gentle answer turns away wrath, but a harsh word stirs up anger."},
     {ref:"Psalm 37:8", text:"Cease from anger, and forsake wrath. Don't fret; it leads only to evildoing."}
   ]},
-  {id:"doubt", label:"Doubting", color:"var(--mood-doubt)", verses:[
+  {id:"doubt", emoji:"🤔", label:"Doubting", color:"var(--mood-doubt)", verses:[
     {ref:"Mark 9:24", text:"Immediately the father of the child cried out with tears, \"I believe. Help my unbelief.\""},
     {ref:"Proverbs 3:5-6", text:"Trust in Yahweh with all your heart, and don't lean on your own understanding. In all your ways acknowledge him, and he will make your paths straight."},
     {ref:"James 1:5-6", text:"If any of you lacks wisdom, let him ask of God, who gives to all liberally and without reproach, and it will be given to him. But let him ask in faith, without any doubting."},
     {ref:"2 Corinthians 5:7", text:"For we walk by faith, not by sight."}
   ]},
-  {id:"joy", label:"Joyful", color:"var(--mood-joy)", verses:[
+  {id:"joy", emoji:"😊", label:"Joyful", color:"var(--mood-joy)", verses:[
     {ref:"Nehemiah 8:10", text:"The joy of Yahweh is your strength."},
     {ref:"Psalm 16:11", text:"You will show me the path of life. In your presence is fullness of joy. In your right hand there are pleasures forever."},
     {ref:"Philippians 4:4", text:"Rejoice in the Lord always! Again I will say, rejoice!"},
     {ref:"Psalm 118:24", text:"This is the day that Yahweh has made. We will rejoice and be glad in it."}
   ]},
-  {id:"gratitude", label:"Grateful", color:"var(--mood-gratitude)", verses:[
+  {id:"gratitude", emoji:"🙏", label:"Grateful", color:"var(--mood-gratitude)", verses:[
     {ref:"1 Thessalonians 5:18", text:"In everything give thanks, for this is the will of God in Christ Jesus toward you."},
     {ref:"Psalm 107:1", text:"Give thanks to Yahweh, for he is good, for his loving kindness endures forever."},
     {ref:"Colossians 3:17", text:"Whatever you do, in word or in deed, do all in the name of the Lord Jesus, giving thanks to God the Father through him."},
     {ref:"James 1:17", text:"Every good gift and every perfect gift is from above, coming down from the Father of lights."}
   ]},
-  {id:"hope", label:"Hopeful", color:"var(--mood-hope)", verses:[
+  {id:"hope", emoji:"🌅", label:"Hopeful", color:"var(--mood-hope)", verses:[
     {ref:"Jeremiah 29:11", text:"I know the thoughts that I think toward you, says Yahweh, thoughts of peace, and not of evil, to give you hope and a future."},
     {ref:"Romans 15:13", text:"May the God of hope fill you with all joy and peace in believing, that you may abound in hope, in the power of the Holy Spirit."},
     {ref:"Lamentations 3:22-23", text:"It is because of Yahweh's loving kindnesses that we are not consumed, because his compassion doesn't fail. They are new every morning."},
     {ref:"Romans 8:28", text:"We know that all things work together for good for those who love God, for those who are called according to his purpose."}
   ]},
-  {id:"peace", label:"Overwhelmed", color:"var(--mood-peace)", verses:[
+  {id:"peace", emoji:"🕊️", label:"Overwhelmed", color:"var(--mood-peace)", verses:[
     {ref:"John 14:27", text:"Peace I leave with you. My peace I give to you; not as the world gives. Don't let your heart be troubled, neither let it be fearful."},
     {ref:"Matthew 11:28", text:"Come to me, all you who labor and are heavily burdened, and I will give you rest."},
     {ref:"Psalm 46:10", text:"Be still, and know that I am God."},
@@ -3963,7 +3969,7 @@ function renderToday(){
       <div class="mood-grid">
         ${TODAY_FEELINGS.map(f => `
           <div class="mood-chip emo-chip" style="--emo:${f.color}" data-feeling="${f.id}">
-            <span class="mood-label">${f.label}</span>
+            <span class="mood-emoji" aria-hidden="true">${f.emoji||""}</span><span class="mood-label">${f.label}</span>
           </div>
         `).join('')}
       </div>
@@ -4287,7 +4293,7 @@ function renderFeelings(){
         <button class="back-link" id="back-to-feelings">← all feelings</button>
         <div class="feeling-header" style="background:${f.color}">
           <div class="eyebrow" style="color:rgba(255,255,255,0.85);">When you feel</div>
-          <h2 style="color:#fff;">${f.label}</h2>
+          <h2 style="color:#fff;"><span class="mood-emoji-hd" aria-hidden="true" style="font-size:40px;display:block;line-height:1.1;margin-bottom:6px;">${f.emoji||""}</span>${f.label}</h2>
         </div>
         ${hasFlow ? `<button class="flow-start-btn" id="flow-start" data-flow="${f.id}">\u2726 Walk with me for 2 minutes</button>` : ''}
         ${f.verses.map(v => `
@@ -4307,7 +4313,7 @@ function renderFeelings(){
       <div class="mood-grid">
         ${FEELINGS.map(f => `
           <div class="mood-chip emo-chip" style="--emo:${f.color}" data-feeling="${f.id}">
-            <span class="mood-label">${f.label}</span>
+            <span class="mood-emoji" aria-hidden="true">${f.emoji||""}</span><span class="mood-label">${f.label}</span>
           </div>
         `).join('')}
       </div>
