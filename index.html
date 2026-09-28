@@ -446,7 +446,7 @@
     border:1px solid color-mix(in srgb, var(--emo) 28%, transparent);
     border-left:5px solid var(--emo);
     background:color-mix(in srgb, var(--emo) 14%, var(--card));
-    color:color-mix(in srgb, var(--emo) 55%, #14110F);
+    color:color-mix(in srgb, var(--emo) 45%, #14110F);
     font-family:'Fraunces',serif;
     font-weight:600;
     font-size:16px;
@@ -1489,6 +1489,19 @@
       font-size:16px;
     }
   }
+  /* ---------- whole-app polish (2026-09) ---------- */
+  :focus-visible{ outline:2px solid var(--coral); outline-offset:2px; border-radius:8px; }
+  button:focus:not(:focus-visible){ outline:none; }
+  .help-btn,.back-link,.flow-exit,.crisis-close,.theme-opt,.browse-books-btn,.browser-close,.testament-btn{ min-height:44px; }
+  .browser-close{ min-width:44px; }
+  .theme-opt{ padding:0 16px; }
+  .back-link,.flow-exit,.crisis-close{ display:inline-flex; align-items:center; padding-top:0; padding-bottom:0; }
+  .tab-icon{ font-size:20px; display:inline-block; min-width:22px; text-align:center; }
+  body.dark .flow-start-btn{ background:var(--coral); color:#1A1410; box-shadow:none; }
+  .flow-start-btn:hover{ filter:brightness(1.06); }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  }
 </style>
 </head>
 <body>
@@ -1509,9 +1522,9 @@
     <div class="tabbar">
       <button class="tab-btn" data-tab="today"><span class="tab-btn-inner"><span class="tab-icon">☀</span>Today</span></button>
       <button class="tab-btn" data-tab="read"><span class="tab-btn-inner"><span class="tab-icon">📖</span>Read</span></button>
-      <button class="tab-btn" data-tab="feelings"><span class="tab-btn-inner"><span class="tab-icon">◐</span>Feelings</span></button>
+      <button class="tab-btn" data-tab="feelings"><span class="tab-btn-inner"><span class="tab-icon">❤</span>Feelings</span></button>
       <button class="tab-btn" data-tab="community"><span class="tab-btn-inner"><span class="tab-icon">✦</span>Journal</span></button>
-      <button class="tab-btn" data-tab="me"><span class="tab-btn-inner"><span class="tab-icon">◔</span>Me</span></button>
+      <button class="tab-btn" data-tab="me"><span class="tab-btn-inner"><span class="tab-icon">☺</span>Me</span></button>
     </div>
   </div>
 </div>
