@@ -148,7 +148,7 @@
     font-size:18px;line-height:1;font-family:"Segoe UI Symbol","Apple Symbols","Noto Sans Symbols2","DejaVu Sans",sans-serif;font-variant-emoji:text;
   }
   .gear-btn:active{ background:rgba(199,154,75,0.16); }
-  body.dark .gear-btn{ background:rgba(255,255,255,0.06); color:#D8CFBE; }
+  body.dark .gear-btn{ background:rgba(255,255,255,0.12); color:#FFFFFF; }
   .settings-panel{ min-height:0; margin-top:calc(18px + env(safe-area-inset-top)); border-radius:22px; margin-bottom:40px; }
   .settings-row{
     display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -164,7 +164,7 @@
     font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--charcoal-soft);cursor:pointer;
   }
   .settings-seg button.on{ background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,0.12); }
-  body.dark .settings-seg button.on{ background:#3a342c;color:#F3EBDD; }
+  body.dark .settings-seg button.on{ background:#4a4238;color:#FFFFFF; }
   .settings-seg[data-setting="textSize"] button:nth-child(1){font-size:11px;}
   .settings-seg[data-setting="textSize"] button:nth-child(3){font-size:16px;}
   .settings-seg[data-setting="textSize"] button:nth-child(4){font-size:19px;}
@@ -173,7 +173,7 @@
     flex:1;min-width:0;max-width:200px;border:1px solid var(--line,#E6DCC6);border-radius:10px;padding:9px 12px;
     font-family:'Inter',sans-serif;font-size:14px;background:#fff;color:var(--ink);
   }
-  body.dark .settings-input{ background:#2a2520;color:#F3EBDD;border-color:#4a433a; }
+  body.dark .settings-input{ background:#2e2822;color:#FFFFFF;border-color:#5a5146; }
   .toggle{ width:50px;height:30px;border-radius:999px;border:none;background:#D9D1C0;position:relative;cursor:pointer;flex-shrink:0; }
   .toggle::after{ content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:999px;background:#fff;transition:left .15s; }
   .toggle.on{ background:var(--coral,#E8836B); }
@@ -526,14 +526,14 @@
   }
   body.dark .mood-chip{
     background:color-mix(in srgb, var(--emo) 20%, var(--card));
-    color:color-mix(in srgb, var(--emo) 40%, #F5EFE6);
-    border-color:color-mix(in srgb, var(--emo) 35%, transparent);
+    color:color-mix(in srgb, var(--emo) 22%, #FFFFFF);
+    border-color:color-mix(in srgb, var(--emo) 55%, transparent);
     border-left-color:var(--emo);
   }
   .flow-top{ border-bottom:2px solid color-mix(in srgb, var(--flow-color) 45%, transparent); padding-bottom:8px; }
   .flow-card{ background:linear-gradient(180deg, color-mix(in srgb, var(--flow-color) 10%, var(--card)), var(--card) 60%) !important; }
   .flow-eyebrow, .flow-ref{ color:color-mix(in srgb, var(--flow-color) 70%, #14110F) !important; }
-  body.dark .flow-eyebrow, body.dark .flow-ref{ color:color-mix(in srgb, var(--flow-color) 45%, #F5EFE6) !important; }
+  body.dark .flow-eyebrow, body.dark .flow-ref{ color:color-mix(in srgb, var(--flow-color) 30%, #FFFFFF) !important; }
   .flow-next.primary{ background:color-mix(in srgb, var(--flow-color) 80%, #14110F) !important; }
 
   /* ---------- nav tabs ---------- */
@@ -1372,18 +1372,33 @@
   /* ---------- dark mode (for 3am, in the dark) ---------- */
   /* A true warm-dark theme, not an inversion: deep charcoal ground, cream ink. */
   body.dark{
-    --ink:#EDE4D3;
-    --ink-soft:#C9BEA8;
-    --parchment:#191512;
-    --card:#221D18;
-    --coral:#E2896F;
-    --coral-deep:#E2896F;
-    --gold:#D3AE6A;
-    --charcoal:#EDE4D3;
-    --charcoal-soft:#A79C88;
-    --line:#3A322A;
-    background:#191512;
+    --ink:#FFFFFF;
+    --ink-soft:#E6E0D6;
+    --parchment:#15120F;
+    --card:#262019;
+    --coral:#F39B80;
+    --coral-deep:#F39B80;
+    --gold:#E8C27A;
+    --sage:#9DBBA6;
+    --charcoal:#FFFFFF;
+    --charcoal-soft:#D2C9BA;
+    --line:#4E453A;
+    background:#15120F;
+    color:#FFFFFF;
   }
+  body.dark .scroll-surface, body.dark p, body.dark li{ color:var(--charcoal); }
+  body.dark .verse-text, body.dark .verse-body, body.dark .crisis-verse-text,
+  body.dark .feeling-verse-text, body.dark .post-text, body.dark .reply-text{ color:#FFFFFF; }
+  body.dark .eyebrow, body.dark .verse-ref, body.dark .verse-num, body.dark .popup-body,
+  body.dark .reply-meta, body.dark .post-meta{ color:#D2C9BA; }
+  body.dark .card, body.dark .feeling-verse-card, body.dark .post{ border-color:#4E453A; }
+  body.dark .hero{ background:linear-gradient(160deg,#1E2A44 0%,#2C3C62 55%,#C85A3F 130%); color:#FFFFFF; }
+  body.dark .hero .eyebrow, body.dark .hero .date, body.dark .streak-count{ color:#F3ECDD; }
+  body.dark .verse-line, body.dark .verse-line .verse-body, body.dark .verse-line *{ color:#FFFFFF; }
+  body.dark .verse-num{ color:#E8C27A; }
+  body.dark .scripture-flow, body.dark .scripture-flow .v-seg, body.dark .invitation-whisper, body.dark .closing-prayer, body.dark .closing-amen{ color:#FFFFFF; }
+  body.dark .vnum{ color:#E8C27A; }
+  body.dark .book-row, body.dark .chapter-pick-row, body.dark .reader-invitation, body.dark .reader-closing{ color:#FFFFFF; }
   body.dark .scroll-surface{
     background:linear-gradient(180deg,#221D18 0%,#1C1713 100%) !important;
   }
@@ -4019,12 +4034,15 @@ async function checkIn(){
 function last7Lit(){
   const lit = [];
   const hist = new Set(state.streak.history || []);
+  // Count days read in the last 7, then fill dots left to right.
+  let n = 0;
   for(let i=6;i>=0;i--){
     const d = new Date();
     d.setDate(d.getDate()-i);
     const ds = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-    lit.push(hist.has(ds));
+    if(hist.has(ds)) n++;
   }
+  for(let i=0;i<7;i++) lit.push(i < n);
   return lit;
 }
 
