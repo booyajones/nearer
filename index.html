@@ -1623,6 +1623,11 @@
   .card, .post-card, .stat-card, .feeling-verse-card{ background:var(--card); }
   .post-card{ margin-bottom:12px; }
   body.dark .crisis-line{ background:var(--card); }
+
+  .jtag-picker{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+  .jtag-opt{ --emo:#888; border:1px solid color-mix(in srgb,var(--emo) 45%,var(--line)); background:transparent; color:var(--charcoal); border-radius:999px; padding:6px 10px; min-height:34px; font-family:inherit; font-size:var(--fs-label); cursor:pointer; }
+  .jtag-opt.on{ background:var(--emo); border-color:var(--emo); color:#fff; font-weight:600; }
+  .jtag{ display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; border-radius:999px; padding:3px 10px; margin:0 6px 8px 0; color:var(--charcoal); background:color-mix(in srgb,var(--emo) 18%,transparent); border:1px solid color-mix(in srgb,var(--emo) 50%,transparent); }
 </style>
 </head>
 <body>
@@ -4517,10 +4522,14 @@ function renderCommunity(){
         <div class="eyebrow" style="margin-bottom:8px;">Your private reflections — saved only on this device</div>
         <input id="post-verse-input" placeholder="Verse reference (optional), e.g. Psalm 23:1" />
         <textarea id="post-text-input" placeholder="What's on your heart?" style="min-height:60px;"></textarea>
+        <div class="eyebrow" style="margin:4px 0 8px;">How are you feeling? (optional)</div>
+        <div class="jtag-picker" role="group" aria-label="Feeling for this entry">
+          ${FEELINGS.map(f => `<button type="button" class="jtag-opt ${state.journalFeeling===f.id?'on':''}" style="--emo:${f.color}" data-jtag="${f.id}" aria-pressed="${state.journalFeeling===f.id}"><span aria-hidden="true">${f.emoji}</span> ${f.label}</button>`).join('')}
+        </div>
         <button class="btn btn-primary" id="submit-post" style="width:100%;">Save reflection</button>
       </div>
       <div id="posts-list">
-        ${state.posts.length === 0 ? `<div class="empty-state">Your journal is empty. Write your first reflection above — it stays private to you.</div>` : state.posts.map(p => {
+        ${state.posts.length === 0 ? `<div class="empty-state">Nothing written yet. When something stirs as you read, set it down here. It stays on this device, between you and God.</div>` : state.posts.map(p => {
           const replies = p.replies || [];
           const replyOpen = state.openReplyPostId === p.id;
           return `
@@ -4529,6 +4538,7 @@ function renderCommunity(){
               <div class="post-name">${escapeHtml(p.name)}</div>
               <div class="post-time">${timeAgo(p.ts)}</div>
             </div>
+            ${(() => { const f = p.feeling && FEELINGS.find(x => x.id === p.feeling); return f ? `<div class="jtag" style="--emo:${f.color}"><span aria-hidden="true">${f.emoji}</span> ${f.label}</div>` : ''; })()}
             ${p.verse ? `<div class="post-verse">${escapeHtml(p.verse)}</div>` : ''}
             <div class="post-text">${escapeHtml(p.text)}</div>
             <div class="post-actions">
@@ -4834,6 +4844,13 @@ function attachHandlers(){
     };
   }
 
+  document.querySelectorAll('[data-jtag]').forEach(b => {
+    b.onclick = () => {
+      const id = b.dataset.jtag;
+      state.journalFeeling = state.journalFeeling === id ? null : id;
+      document.querySelectorAll('[data-jtag]').forEach(x => { const on = x.dataset.jtag === state.journalFeeling; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); });
+    };
+  });
   const submitPost = document.getElementById('submit-post');
   if(submitPost){
     submitPost.onclick = async () => {
@@ -4846,6 +4863,7 @@ function attachHandlers(){
         name: state.profile.name,
         text,
         verse: verseEl.value.trim(),
+        feeling: state.journalFeeling || null,
         ts: Date.now(),
         likes: 0,
         likedBy: []
@@ -4854,6 +4872,7 @@ function attachHandlers(){
       submitPost.textContent = "Posting…";
       await savePost(post);
       state.posts.unshift(post);
+      state.journalFeeling = null;
       render();
     };
   }
