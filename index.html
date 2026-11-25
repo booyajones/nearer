@@ -1602,6 +1602,27 @@
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
   }
+
+  /* ===== polish v6: shared type scale + card system ===== */
+  :root{
+    --fs-eyebrow:11px; --fs-label:13px; --fs-body:15px; --fs-title:18px; --fs-display:24px;
+    --card-radius:16px; --card-pad:16px; --card-border:1px solid var(--line);
+    --card-shadow:0 1px 2px rgba(30,42,68,0.05), 0 8px 22px -16px rgba(30,42,68,0.35);
+    --space-section:28px;
+  }
+  body.dark{ --card-shadow:0 1px 0 rgba(255,255,255,0.03), 0 10px 24px -16px rgba(0,0,0,0.8); }
+  .eyebrow, .settings-section{ font-size:var(--fs-eyebrow); }
+  .section-title{ font-family:'Fraunces',serif; font-size:var(--fs-title); font-weight:600; color:var(--ink); letter-spacing:-0.01em; }
+  .settings-sub, .post-time, .stat-label, .tab-btn{ font-size:max(var(--fs-eyebrow),11px); }
+  .post-name, .settings-seg button, .empty-state{ font-size:var(--fs-label); }
+  .post-text, .settings-label{ font-size:var(--fs-body); line-height:1.55; }
+  .crisis-heading{ font-size:var(--fs-display); }
+  .card, .post-card, .stat-card, .feeling-verse-card, .crisis-line{
+    border-radius:var(--card-radius); border:var(--card-border); box-shadow:var(--card-shadow); padding:var(--card-pad);
+  }
+  .card, .post-card, .stat-card, .feeling-verse-card{ background:var(--card); }
+  .post-card{ margin-bottom:12px; }
+  body.dark .crisis-line{ background:var(--card); }
 </style>
 </head>
 <body>
