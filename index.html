@@ -1628,6 +1628,19 @@
   .jtag-opt{ --emo:#888; border:1px solid color-mix(in srgb,var(--emo) 45%,var(--line)); background:transparent; color:var(--charcoal); border-radius:999px; padding:6px 10px; min-height:34px; font-family:inherit; font-size:var(--fs-label); cursor:pointer; }
   .jtag-opt.on{ background:var(--emo); border-color:var(--emo); color:#fff; font-weight:600; }
   .jtag{ display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; border-radius:999px; padding:3px 10px; margin:0 6px 8px 0; color:var(--charcoal); background:color-mix(in srgb,var(--emo) 18%,transparent); border:1px solid color-mix(in srgb,var(--emo) 50%,transparent); }
+
+  /* spacing rhythm */
+  .section{ margin:var(--space-section) 20px 0 20px; }
+  .section-head{ margin-bottom:14px; }
+  .empty-state{ padding:28px 18px; line-height:1.6; font-family:'Fraunces',serif; font-style:italic; color:var(--charcoal-soft); border:1px dashed var(--line); border-radius:var(--card-radius); }
+  /* micro-polish */
+  .btn, .mood-chip, .jtag-opt, .theme-opt, .settings-seg button, .back-link, .heart-btn, .reply-toggle-btn, .book-chip{ transition:transform .12s ease, filter .12s ease, background-color .15s ease; }
+  .mood-chip:active, .jtag-opt:active, .theme-opt:active, .settings-seg button:active, .heart-btn:active, .book-chip:active{ transform:scale(0.96); }
+  body.no-motion .btn:active, body.no-motion .mood-chip:active, body.no-motion .jtag-opt:active{ transform:none; }
+  :focus-visible{ outline:2px solid var(--coral-deep); outline-offset:2px; border-radius:8px; }
+  body.dark :focus-visible{ outline-color:#F3B35C; }
+  .tab-icon{ font-size:20px; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; }
+  .tab-icon svg{ width:22px; height:22px; }
 </style>
 </head>
 <body>
@@ -4103,7 +4116,7 @@ function renderToday(){
         <div class="streak-count">last 7 days</div>
         <div class="streak-count">${(state.streak.count||0) > 0
           ? `<b>${state.streak.count}</b> ${state.streak.count===1?'day':'days'} with Nearer`
-          : `however long it's been, welcome back`}</div>
+          : `whenever you're ready, a new day begins`}</div>
       </div>
     </div>
 
