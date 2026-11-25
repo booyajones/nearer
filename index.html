@@ -1503,6 +1503,29 @@
   .theme-opt{ padding:0 16px; }
   .back-link,.flow-exit,.crisis-close{ display:inline-flex; align-items:center; padding-top:0; padding-bottom:0; }
   .tab-icon{ font-size:20px; display:inline-block; min-width:22px; text-align:center; }
+  /* ---------- colored tab icons (2026-11) ---------- */
+  .tab-btn[data-tab="today"] .tab-icon{ color:#E9A23B; }
+  .tab-btn[data-tab="read"] .tab-icon{ color:#3B7DD8; }
+  .tab-btn[data-tab="feelings"] .tab-icon{ color:#E0383E; }
+  .tab-btn[data-tab="community"] .tab-icon{ color:#8E5BD6; }
+  .tab-btn[data-tab="me"] .tab-icon{ color:#2E9E6B; }
+  .tab-btn .tab-icon{ opacity:.78; transition:opacity .15s, transform .15s; }
+  .tab-btn.active .tab-icon{ opacity:1; transform:scale(1.12); }
+  .tab-btn[data-tab="today"].active .tab-btn-inner{ background:rgba(233,162,59,.16); }
+  .tab-btn[data-tab="read"].active .tab-btn-inner{ background:rgba(59,125,216,.14); }
+  .tab-btn[data-tab="feelings"].active .tab-btn-inner{ background:rgba(224,56,62,.13); }
+  .tab-btn[data-tab="community"].active .tab-btn-inner{ background:rgba(142,91,214,.14); }
+  .tab-btn[data-tab="me"].active .tab-btn-inner{ background:rgba(46,158,107,.14); }
+  .tab-btn[data-tab="today"].active{ color:#B8761A; }
+  .tab-btn[data-tab="read"].active{ color:#2A5FA8; }
+  .tab-btn[data-tab="feelings"].active{ color:#B52A2F; }
+  .tab-btn[data-tab="community"].active{ color:#6E42AD; }
+  .tab-btn[data-tab="me"].active{ color:#217A51; }
+  body.dark .tab-btn[data-tab="today"].active{ color:#F2B85A; }
+  body.dark .tab-btn[data-tab="read"].active{ color:#7FAFF0; }
+  body.dark .tab-btn[data-tab="feelings"].active{ color:#F07075; }
+  body.dark .tab-btn[data-tab="community"].active{ color:#B897EC; }
+  body.dark .tab-btn[data-tab="me"].active{ color:#6CCB9B; }
   body.dark .flow-start-btn{ background:var(--coral); color:#1A1410; box-shadow:none; }
   .flow-start-btn:hover{ filter:brightness(1.06); }
   @media (prefers-reduced-motion: reduce){
@@ -1528,8 +1551,8 @@
     <div class="tabbar">
       <button class="tab-btn" data-tab="today"><span class="tab-btn-inner"><span class="tab-icon">☀</span>Today</span></button>
       <button class="tab-btn" data-tab="read"><span class="tab-btn-inner"><span class="tab-icon">📖</span>Read</span></button>
-      <button class="tab-btn" data-tab="feelings"><span class="tab-btn-inner"><span class="tab-icon">❤</span>Feelings</span></button>
-      <button class="tab-btn" data-tab="community"><span class="tab-btn-inner"><span class="tab-icon">✦</span>Journal</span></button>
+      <button class="tab-btn" data-tab="feelings"><span class="tab-btn-inner"><span class="tab-icon">❤️</span>Feelings</span></button>
+      <button class="tab-btn" data-tab="community"><span class="tab-btn-inner"><span class="tab-icon">✍️</span>Journal</span></button>
       <button class="tab-btn" data-tab="me"><span class="tab-btn-inner"><span class="tab-icon">☺</span>Me</span></button>
     </div>
   </div>
