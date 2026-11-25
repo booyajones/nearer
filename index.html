@@ -138,6 +138,61 @@
   }
   .help-btn-dot{ font-size:12px; line-height:1; }
 
+
+  /* ---------- settings ---------- */
+  .topbar-left{ display:flex; align-items:center; gap:8px; }
+  .gear-btn{
+    width:36px;height:36px;border-radius:999px;border:1px solid var(--line,#E6DCC6);
+    background:rgba(255,255,255,0.55);color:var(--charcoal-soft,#6b6b6b);
+    display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+    font-size:18px;line-height:1;font-family:"Segoe UI Symbol","Apple Symbols","Noto Sans Symbols2","DejaVu Sans",sans-serif;font-variant-emoji:text;
+  }
+  .gear-btn:active{ background:rgba(199,154,75,0.16); }
+  body.dark .gear-btn{ background:rgba(255,255,255,0.06); color:#D8CFBE; }
+  .settings-panel{ min-height:0; margin-top:calc(18px + env(safe-area-inset-top)); border-radius:22px; margin-bottom:40px; }
+  .settings-row{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 0;border-bottom:1px solid var(--line,#E6DCC6);
+  }
+  .settings-row:last-child{ border-bottom:none; }
+  .settings-label{ font-family:'Fraunces',serif;font-size:16px;color:var(--ink); }
+  .settings-sub{ font-size:12px;color:var(--charcoal-soft);margin-top:2px; }
+  .settings-seg{ display:flex;gap:4px;background:rgba(0,0,0,0.05);border-radius:12px;padding:3px;flex-shrink:0; }
+  body.dark .settings-seg{ background:rgba(255,255,255,0.08); }
+  .settings-seg button{
+    border:none;background:transparent;border-radius:9px;padding:0 11px;min-height:38px;
+    font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--charcoal-soft);cursor:pointer;
+  }
+  .settings-seg button.on{ background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,0.12); }
+  body.dark .settings-seg button.on{ background:#3a342c;color:#F3EBDD; }
+  .settings-seg[data-setting="textSize"] button:nth-child(1){font-size:11px;}
+  .settings-seg[data-setting="textSize"] button:nth-child(3){font-size:16px;}
+  .settings-seg[data-setting="textSize"] button:nth-child(4){font-size:19px;}
+  .settings-section{ font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--charcoal-soft);margin:22px 0 4px; }
+  .settings-input{
+    flex:1;min-width:0;max-width:200px;border:1px solid var(--line,#E6DCC6);border-radius:10px;padding:9px 12px;
+    font-family:'Inter',sans-serif;font-size:14px;background:#fff;color:var(--ink);
+  }
+  body.dark .settings-input{ background:#2a2520;color:#F3EBDD;border-color:#4a433a; }
+  .toggle{ width:50px;height:30px;border-radius:999px;border:none;background:#D9D1C0;position:relative;cursor:pointer;flex-shrink:0; }
+  .toggle::after{ content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:999px;background:#fff;transition:left .15s; }
+  .toggle.on{ background:var(--coral,#E8836B); }
+  .toggle.on::after{ left:23px; }
+  .settings-danger{
+    width:100%;margin-top:8px;border:1px solid rgba(200,60,40,0.35);background:transparent;color:#B33A26;
+    border-radius:12px;padding:12px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;min-height:44px;
+  }
+  .settings-about{ font-size:12px;color:var(--charcoal-soft);text-align:center;margin-top:18px;line-height:1.5; }
+  body.text-sm .verse-text{ font-size:20px; }
+  body.text-sm .verse-body, body.text-sm .v-seg{ font-size:15px; }
+  body.text-sm .flow-body{ font-size:17px; }
+  body.text-lg .verse-text{ font-size:28px; }
+  body.text-lg .verse-body, body.text-lg .v-seg{ font-size:19px; }
+  body.text-lg .flow-body, body.text-lg .feeling-verse-text{ font-size:23px; }
+  body.text-xl .verse-text{ font-size:32px; }
+  body.text-xl .verse-body, body.text-xl .v-seg{ font-size:22px; }
+  body.text-xl .flow-body, body.text-xl .feeling-verse-text{ font-size:26px; }
+  body.no-motion *, body.no-motion *::before, body.no-motion *::after{ transition:none !important; animation:none !important; }
   /* ---------- crisis / "struggling right now" overlay ---------- */
   .crisis-backdrop{
     position:fixed; inset:0;
@@ -1508,24 +1563,24 @@
   .tab-btn[data-tab="today"] .tab-icon{ color:#E9A23B; }
   .tab-btn[data-tab="read"] .tab-icon{ color:#3B7DD8; }
   .tab-btn[data-tab="feelings"] .tab-icon{ color:#E0383E; }
-  .tab-btn[data-tab="community"] .tab-icon{ color:#8E5BD6; }
+  .tab-btn[data-tab="community"] .tab-icon{ color:#E08A1E; }
   .tab-btn[data-tab="me"] .tab-icon{ color:#2E9E6B; }
   .tab-btn .tab-icon{ opacity:.78; transition:opacity .15s, transform .15s; }
   .tab-btn.active .tab-icon{ opacity:1; transform:scale(1.12); }
   .tab-btn[data-tab="today"].active .tab-btn-inner{ background:rgba(233,162,59,.16); }
   .tab-btn[data-tab="read"].active .tab-btn-inner{ background:rgba(59,125,216,.14); }
   .tab-btn[data-tab="feelings"].active .tab-btn-inner{ background:rgba(224,56,62,.13); }
-  .tab-btn[data-tab="community"].active .tab-btn-inner{ background:rgba(142,91,214,.14); }
+  .tab-btn[data-tab="community"].active .tab-btn-inner{ background:rgba(224,138,30,.14); }
   .tab-btn[data-tab="me"].active .tab-btn-inner{ background:rgba(46,158,107,.14); }
   .tab-btn[data-tab="today"].active{ color:#B8761A; }
   .tab-btn[data-tab="read"].active{ color:#2A5FA8; }
   .tab-btn[data-tab="feelings"].active{ color:#B52A2F; }
-  .tab-btn[data-tab="community"].active{ color:#6E42AD; }
+  .tab-btn[data-tab="community"].active{ color:#B06A0E; }
   .tab-btn[data-tab="me"].active{ color:#217A51; }
   body.dark .tab-btn[data-tab="today"].active{ color:#F2B85A; }
   body.dark .tab-btn[data-tab="read"].active{ color:#7FAFF0; }
   body.dark .tab-btn[data-tab="feelings"].active{ color:#F07075; }
-  body.dark .tab-btn[data-tab="community"].active{ color:#B897EC; }
+  body.dark .tab-btn[data-tab="community"].active{ color:#F3B35C; }
   body.dark .tab-btn[data-tab="me"].active{ color:#6CCB9B; }
   body.dark .flow-start-btn{ background:var(--coral); color:#1A1410; box-shadow:none; }
   .flow-start-btn:hover{ filter:brightness(1.06); }
@@ -1538,7 +1593,10 @@
 
 <div id="app">
   <div class="topbar">
-    <div class="wordmark">Near<span>er</span></div>
+    <div class="topbar-left">
+      <div class="wordmark">Near<span>er</span></div>
+      <button class="gear-btn" id="settings-btn" aria-label="Settings" title="Settings">&#x2699;&#xFE0E;</button>
+    </div>
     <div class="topbar-right">
       <button class="help-btn" id="help-btn" aria-label="I need help right now">
         <span class="help-btn-dot">♡</span><span class="help-btn-text">I'm struggling</span>
@@ -3804,8 +3862,22 @@ let state = {
   bookBrowserTestament: "OT",
   bookBrowserBook: null,
   crisisView: "help",
-  theme: null // 'light' | 'dark' | null(=auto)
+  theme: null, // 'light' | 'dark' | null(=auto)
+  settingsOpen: false,
+  settings: { textSize: 'normal', reduceMotion: false }
 };
+async function saveSettings(){
+  try{ await window.storage.set('settings', JSON.stringify(state.settings), false); }catch(e){}
+}
+function applySettings(){
+  const b = document.body;
+  b.classList.remove('text-sm','text-lg','text-xl');
+  const ts = state.settings.textSize;
+  if(ts==='small') b.classList.add('text-sm');
+  else if(ts==='large') b.classList.add('text-lg');
+  else if(ts==='xl') b.classList.add('text-xl');
+  b.classList.toggle('no-motion', !!state.settings.reduceMotion);
+}
 
 function systemPrefersDark(){
   try{ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }catch(e){ return false; }
@@ -3878,7 +3950,12 @@ async function loadAll(){
     const t = await window.storage.get('theme');
     if(t && t.value){ state.theme = (t.value === 'auto') ? null : t.value; }
   }catch(e){}
+  try{
+    const sv = await window.storage.get('settings');
+    if(sv && sv.value){ state.settings = Object.assign({}, state.settings, JSON.parse(sv.value)); }
+  }catch(e){}
   applyTheme();
+  applySettings();
   await loadPosts();
   state.loaded = true;
 }
@@ -4184,6 +4261,42 @@ function isUSLocale(){
   try { return (navigator.language || 'en-US').toLowerCase().indexOf('us') !== -1 || (navigator.language||'').toLowerCase() === 'en'; }
   catch(e){ return true; }
 }
+function renderSettings(){
+  if(!state.settingsOpen) return '';
+  const seg = (name, opts, cur) => `<div class="settings-seg" data-setting="${name}">${opts.map(o=>`<button data-val="${o[0]}" class="${cur===o[0]?'on':''}" aria-label="${o[2]||o[1]}">${o[1]}</button>`).join('')}</div>`;
+  return `
+    <div class="crisis-backdrop" id="settings-backdrop">
+      <div class="crisis-panel settings-panel">
+        <button class="crisis-close" id="settings-close">← done</button>
+        <div class="crisis-heading">Settings</div>
+        <div class="settings-section">You</div>
+        <div class="settings-row">
+          <div><div class="settings-label">Name</div><div class="settings-sub">Shown on your journal posts</div></div>
+          <input class="settings-input" id="settings-name" value="${escapeHtml(state.profile.name)}" placeholder="Your name" />
+        </div>
+        <div class="settings-section">Look</div>
+        <div class="settings-row">
+          <div><div class="settings-label">Theme</div></div>
+          ${seg('theme', [['auto','Auto'],['light','Light'],['dark','Dark']], state.theme||'auto')}
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-label">Text size</div><div class="settings-sub">For verses and readings</div></div>
+          ${seg('textSize', [['small','A','Small'],['normal','A','Normal'],['large','A','Large'],['xl','A','Extra large']], state.settings.textSize)}
+        </div>
+        <div class="settings-row">
+          <div><div class="settings-label">Reduce motion</div><div class="settings-sub">Turn off animations</div></div>
+          <button class="toggle ${state.settings.reduceMotion?'on':''}" data-toggle="reduceMotion" aria-pressed="${!!state.settings.reduceMotion}" aria-label="Reduce motion"></button>
+        </div>
+        <div class="settings-section">Your data</div>
+        <div class="settings-sub" style="margin-bottom:10px;">Everything is saved only on this device. Nothing is sent anywhere.</div>
+        <button class="settings-danger" id="settings-reset-streak">Reset streak</button>
+        <button class="settings-danger" id="settings-clear-all">Erase all my data</button>
+        <div class="settings-about">Nearer · Bible text from the World English Bible (public domain)</div>
+      </div>
+    </div>
+  `;
+}
+
 function renderCrisis(){
   if(!state.crisisOpen) return '';
   // Second screen: sit with a verse (only reached by an explicit tap).
@@ -4471,6 +4584,7 @@ function renderMe(){
 // ============================================================
 function render(){
   applyTheme();
+  applySettings();
   const content = document.getElementById('content');
   let html = '';
   if(state.tab === 'today') html = renderToday();
@@ -4478,7 +4592,7 @@ function render(){
   else if(state.tab === 'feelings') html = renderFeelings();
   else if(state.tab === 'community') html = renderCommunity();
   else if(state.tab === 'me') html = renderMe();
-  content.innerHTML = html + renderSheet() + renderContinuePopup() + renderBookBrowser() + renderCrisis();
+  content.innerHTML = html + renderSheet() + renderContinuePopup() + renderBookBrowser() + renderCrisis() + renderSettings();
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.tab === state.tab);
@@ -4599,6 +4713,46 @@ function attachHandlers(){
 
   const helpBtn = document.getElementById('help-btn');
   if(helpBtn) helpBtn.onclick = () => { state.crisisOpen = true; state.crisisView = 'help'; render(); };
+  const settingsBtn = document.getElementById('settings-btn');
+  if(settingsBtn) settingsBtn.onclick = () => { state.settingsOpen = true; render(); };
+  const settingsClose = document.getElementById('settings-close');
+  if(settingsClose) settingsClose.onclick = () => { state.settingsOpen = false; render(); };
+  const settingsBackdrop = document.getElementById('settings-backdrop');
+  if(settingsBackdrop) settingsBackdrop.onclick = (e) => { if(e.target.id === 'settings-backdrop'){ state.settingsOpen = false; render(); } };
+  const settingsName = document.getElementById('settings-name');
+  if(settingsName){
+    settingsName.onchange = async () => {
+      const val = settingsName.value.trim();
+      if(val){ state.profile.name = val; await saveProfile(); }
+    };
+  }
+  document.querySelectorAll('.settings-seg button').forEach(btn => {
+    btn.onclick = async () => {
+      const name = btn.parentElement.dataset.setting, val = btn.dataset.val;
+      if(name === 'theme'){ state.theme = (val === 'auto') ? null : val; await saveTheme(); }
+      else { state.settings[name] = val; await saveSettings(); }
+      render();
+    };
+  });
+  document.querySelectorAll('.toggle[data-toggle]').forEach(btn => {
+    btn.onclick = async () => {
+      state.settings[btn.dataset.toggle] = !state.settings[btn.dataset.toggle];
+      await saveSettings();
+      render();
+    };
+  });
+  const resetStreak = document.getElementById('settings-reset-streak');
+  if(resetStreak) resetStreak.onclick = async () => {
+    if(!confirm('Reset your streak to zero?')) return;
+    state.streak = { count: 0, longest: 0, lastCheckIn: null, history: [] };
+    await saveStreak(); render();
+  };
+  const clearAll = document.getElementById('settings-clear-all');
+  if(clearAll) clearAll.onclick = async () => {
+    if(!confirm('Erase everything saved in Nearer on this device? This cannot be undone.')) return;
+    try{ const r = await window.storage.list(''); for(const k of (r.keys||[])) await window.storage.remove(k); }catch(e){}
+    location.reload();
+  };
   const crisisClose = document.getElementById('crisis-close');
   if(crisisClose) crisisClose.onclick = () => { state.crisisOpen = false; state.crisisView = 'help'; render(); };
   const crisisGoVerses = document.getElementById('crisis-go-verses');
