@@ -1668,6 +1668,13 @@
   .share-btn{ background:transparent; color:var(--gold); border:1px solid color-mix(in srgb,var(--gold) 55%,transparent); }
   .hero .share-btn{ color:#F7F1E1; border-color:rgba(255,255,255,0.35); }
   .toast{ position:fixed; left:50%; bottom:calc(96px + env(safe-area-inset-bottom)); transform:translateX(-50%); background:var(--ink); color:var(--parchment); font-family:'Inter',sans-serif; font-size:var(--fs-label); padding:8px 16px; border-radius:999px; z-index:9999; box-shadow:var(--card-shadow); pointer-events:none; }
+  .prayer-form{ display:flex; gap:8px; margin-bottom:12px; }
+  .prayer-form input{ flex:1; min-width:0; }
+  .prayer-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
+  .prayer-item-text{ flex:1; min-width:0; font-family:'Fraunces',serif; font-size:var(--fs-body); line-height:1.5; color:var(--ink); overflow-wrap:anywhere; }
+  .prayer-item-date{ display:block; margin-top:4px; font-family:'Inter',sans-serif; font-size:var(--fs-eyebrow); color:var(--charcoal-soft); }
+  .prayer-act{ background:transparent; border:1px solid var(--line); color:var(--charcoal); border-radius:999px; padding:6px 10px; min-height:34px; font-size:12px; cursor:pointer; font-family:inherit; }
+  .prayer-group-label{ margin:16px 0 8px; }
 </style>
 </head>
 <body>
@@ -3930,6 +3937,7 @@ let state = {
   annotations: {}, // key: "Book Chapter:verseNum" -> {color, note}
   profile: { name: "" },
   posts: [],
+  prayers: [], // stored under nearer:prayers
   currentBook: BOOK_ORDER[0],
   activeFeeling: null,
   flowFeeling: null,
@@ -4037,6 +4045,7 @@ async function loadAll(){
   }catch(e){}
   applyTheme();
   applySettings();
+  try{ const pr = await window.storage.get('prayers'); if(pr && pr.value) state.prayers = JSON.parse(pr.value); }catch(e){}
   await loadPosts();
   state.loaded = true;
 }
@@ -4045,6 +4054,28 @@ async function saveStreak(){
 }
 async function saveAnnotations(){
   try{ await window.storage.set('annotations', JSON.stringify(state.annotations), false); }catch(e){}
+}
+async function savePrayers(){
+  try{ await window.storage.set('prayers', JSON.stringify(state.prayers), false); }catch(e){}
+}
+function renderPrayers(){
+  const open = state.prayers.filter(p => !p.answered), done = state.prayers.filter(p => p.answered);
+  const item = p => `<div class="card prayer-item">
+      <div class="prayer-item-text">${escapeHtml(p.text)}<span class="prayer-item-date">${p.answered ? 'Answered ' + new Date(p.answered).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : 'Prayed ' + new Date(p.ts).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span></div>
+      ${p.answered ? '' : `<button class="prayer-act" data-prayer-answer="${p.id}" aria-label="Mark prayer answered">Answered</button>`}
+      <button class="prayer-act" data-prayer-del="${p.id}" aria-label="Delete prayer">Delete</button>
+    </div>`;
+  return `
+    <div class="section">
+      <div class="section-head"><div class="section-title">Prayers</div></div>
+      <div class="prayer-form">
+        <input id="prayer-input" maxlength="200" placeholder="A short prayer request" aria-label="New prayer request" />
+        <button class="btn btn-primary" id="add-prayer" aria-label="Add prayer">Add</button>
+      </div>
+      ${state.prayers.length === 0 ? `<div class="empty-state">No prayers written yet. Bring what's on your heart; He hears.</div>` : ''}
+      ${open.map(item).join('')}
+      ${done.length ? `<div class="eyebrow prayer-group-label">Answered</div>${done.map(item).join('')}` : ''}
+    </div>`;
 }
 async function saveProfile(){
   try{ await window.storage.set('profile', JSON.stringify(state.profile), false); }catch(e){}
@@ -4658,6 +4689,7 @@ function renderCommunity(){
         `;}).join('')}
       </div>
     </div>
+    ${renderPrayers()}
   `;
 }
 
@@ -4737,6 +4769,23 @@ function render(){
 }
 
 function attachHandlers(){
+  const addPrayer = document.getElementById('add-prayer');
+  if(addPrayer){
+    const inp = document.getElementById('prayer-input');
+    addPrayer.onclick = async () => {
+      const text = inp.value.trim(); if(!text) return;
+      state.prayers.unshift({ id: Date.now()+'-'+Math.random().toString(36).slice(2,6), text, ts: Date.now(), answered: null });
+      await savePrayers(); render();
+    };
+    inp.onkeydown = (e) => { if(e.key === 'Enter') addPrayer.click(); };
+  }
+  document.querySelectorAll('[data-prayer-answer]').forEach(b => b.onclick = async () => {
+    const p = state.prayers.find(x => x.id === b.dataset.prayerAnswer); if(p){ p.answered = Date.now(); await savePrayers(); render(); }
+  });
+  document.querySelectorAll('[data-prayer-del]').forEach(b => b.onclick = async () => {
+    if(!confirm('Delete this prayer?')) return;
+    state.prayers = state.prayers.filter(x => x.id !== b.dataset.prayerDel); await savePrayers(); render();
+  });
   const shareToday = document.getElementById('share-today');
   if(shareToday) shareToday.onclick = () => { const v = DAILY_VERSES[dayOfYear() % DAILY_VERSES.length]; shareVerse(v.text, v.ref); };
   const shareSheet = document.getElementById('share-sheet-verse');
