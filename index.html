@@ -1675,6 +1675,7 @@
   .prayer-item-date{ display:block; margin-top:4px; font-family:'Inter',sans-serif; font-size:var(--fs-eyebrow); color:var(--charcoal-soft); }
   .prayer-act{ background:transparent; border:1px solid var(--line); color:var(--charcoal); border-radius:999px; padding:6px 10px; min-height:34px; font-size:12px; cursor:pointer; font-family:inherit; }
   .prayer-group-label{ margin:16px 0 8px; }
+  .kept-verse{ display:block; width:100%; text-align:left; font:inherit; color:inherit; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -4698,6 +4699,8 @@ function renderCommunity(){
 // ============================================================
 function renderMe(){
   const highlighted = Object.entries(state.annotations).filter(([k,v]) => v.color || v.note);
+  const missing = [...new Set(highlighted.map(([k]) => k.slice(0,k.lastIndexOf(':'))).filter(b => !BIBLE[b]))];
+  if(missing.length) Promise.all(missing.map(b => ensureLoaded(b).catch(()=>{}))).then(() => { if(state.tab==='me' && missing.some(b => BIBLE[b])) render(); });
   return `
     <div class="section" style="margin-top:16px;">
       <div class="section-head"><div class="section-title">Your walk</div></div>
@@ -4723,19 +4726,19 @@ function renderMe(){
           <div class="stat-label">longest so far</div>
         </div>
       </div>
-      <div class="section-head"><div class="section-title">Your highlights & notes</div></div>
-      ${highlighted.length === 0 ? `<div class="empty-state">Tap any verse in Read to highlight it or leave a note — they'll show up here.</div>` :
+      <div class="section-head"><div class="section-title">Verses I've kept</div></div>
+      ${highlighted.length === 0 ? `<div class="empty-state">Tap any verse in Read to highlight it or leave a note. The verses you keep will rest here.</div>` :
         highlighted.map(([k,v]) => {
           const book = k.slice(0, k.lastIndexOf(':'));
           const num = k.split(':').pop();
           const chapter = BIBLE[book];
           const entry = chapter ? chapter.verses.find(x => String(x[0])===String(num)) : null;
           return `
-            <div class="card" style="margin-bottom:10px;border-left:4px solid ${v.color||'var(--line)'}">
+            <button type="button" class="card kept-verse" data-jump-chapter="${escapeHtml(book)}" title="Open ${escapeHtml(book)}" style="margin-bottom:10px;border-left:4px solid ${v.color||'var(--line)'}">
               <div class="eyebrow" style="margin-bottom:6px;">${book} ${num}</div>
               <div style="font-family:'Fraunces',serif;font-size:14.5px;margin-bottom:6px;">${escapeHtml(entry?entry[1]:'')}</div>
               ${v.note ? `<div style="font-size:12.5px;color:var(--charcoal-soft);">✎ ${escapeHtml(v.note)}</div>` : ''}
-            </div>
+            </button>
           `;
         }).join('')
       }
@@ -4785,6 +4788,11 @@ function attachHandlers(){
   document.querySelectorAll('[data-prayer-del]').forEach(b => b.onclick = async () => {
     if(!confirm('Delete this prayer?')) return;
     state.prayers = state.prayers.filter(x => x.id !== b.dataset.prayerDel); await savePrayers(); render();
+  });
+  document.querySelectorAll('[data-jump-chapter]').forEach(b => b.onclick = async () => {
+    await ensureLoaded(b.dataset.jumpChapter);
+    if(!BIBLE[b.dataset.jumpChapter]) return;
+    state.currentBook = b.dataset.jumpChapter; saveReadingProgress(); state.tab = 'read'; render(); scrollAppToTop();
   });
   const shareToday = document.getElementById('share-today');
   if(shareToday) shareToday.onclick = () => { const v = DAILY_VERSES[dayOfYear() % DAILY_VERSES.length]; shareVerse(v.text, v.ref); };
