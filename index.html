@@ -1641,6 +1641,24 @@
   body.dark :focus-visible{ outline-color:#F3B35C; }
   .tab-icon{ font-size:20px; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; }
   .tab-icon svg{ width:22px; height:22px; }
+  /* ===== polish v7: type scale for read, flow, hero, crisis ===== */
+  .crisis-close, .crisis-line-desc, .crisis-disclaimer, .crisis-divider span, .crisis-verse-ref, .crisis-footnote{ font-size:var(--fs-eyebrow); }
+  .crisis-line-action{ font-size:var(--fs-label); }
+  .crisis-sub, .crisis-verse-link{ font-size:var(--fs-body); }
+  .crisis-line-name, .crisis-verse-text{ font-size:var(--fs-title); }
+  .hero .date, .verse-ref{ font-size:var(--fs-eyebrow); }
+  .browse-books-btn, .reader-progress, .reader-book-sub, .vnum, .closing-amen, .reader-note-hint, .chapter-nav-label, .verse-num, .note-flag, .book-row-tag, .chapter-pick-ref, .browser-back{ font-size:var(--fs-eyebrow); }
+  .testament-btn, .chapter-nav-name, .closing-ornament{ font-size:var(--fs-label); }
+  .invitation-whisper, .closing-prayer, .book-row-name, .chapter-pick-name, .invitation-ornament{ font-size:var(--fs-body); }
+  .reader-book-title{ font-size:var(--fs-display); }
+  .flow-exit, .flow-eyebrow, .flow-ref, .flow-notok{ font-size:var(--fs-eyebrow); }
+  .flow-back{ font-size:var(--fs-label); }
+  .flow-next, .flow-start-btn{ font-size:var(--fs-body); }
+  /* tab bar press feedback */
+  .tab-btn{ transition:transform .12s ease; }
+  .tab-btn:active{ transform:scale(0.94); }
+  body.no-motion .tab-btn:active{ transform:none; }
+  body.no-motion .mood-chip:active, body.no-motion .theme-opt:active, body.no-motion .settings-seg button:active, body.no-motion .heart-btn:active, body.no-motion .book-chip:active{ transform:none; }
 </style>
 </head>
 <body>
