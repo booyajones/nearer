@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="nearer-version" content="v=7">
+<meta name="nearer-version" content="v=8">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1676,6 +1676,9 @@
   .prayer-act{ background:transparent; border:1px solid var(--line); color:var(--charcoal); border-radius:999px; padding:6px 10px; min-height:34px; font-size:12px; cursor:pointer; font-family:inherit; }
   .prayer-group-label{ margin:16px 0 8px; }
   .kept-verse{ display:block; width:100%; text-align:left; font:inherit; color:inherit; cursor:pointer; }
+  @keyframes nearerFade{ from{ opacity:0; transform:translateY(4px); } to{ opacity:1; transform:none; } }
+  #content.tab-fade{ animation:nearerFade .28s ease-out; }
+  body.no-motion #content.tab-fade{ animation:none; }
 </style>
 </head>
 <body>
@@ -1697,11 +1700,11 @@
 
   <div class="tabbar-wrap">
     <div class="tabbar">
-      <button class="tab-btn" data-tab="today"><span class="tab-btn-inner"><span class="tab-icon">&#x2600;&#xFE0E;</span>Today</span></button>
-      <button class="tab-btn" data-tab="read"><span class="tab-btn-inner"><span class="tab-icon">&#x1F4D6;&#xFE0E;</span>Read</span></button>
-      <button class="tab-btn" data-tab="feelings"><span class="tab-btn-inner"><span class="tab-icon">&#x2764;&#xFE0E;</span>Feelings</span></button>
-      <button class="tab-btn" data-tab="community"><span class="tab-btn-inner"><span class="tab-icon">&#x270E;&#xFE0E;</span>Journal</span></button>
-      <button class="tab-btn" data-tab="me"><span class="tab-btn-inner"><span class="tab-icon">&#x263A;&#xFE0E;</span>Me</span></button>
+      <button class="tab-btn" data-tab="today" aria-label="Today"><span class="tab-btn-inner"><span class="tab-icon" aria-hidden="true">&#x2600;&#xFE0E;</span>Today</span></button>
+      <button class="tab-btn" data-tab="read" aria-label="Read"><span class="tab-btn-inner"><span class="tab-icon" aria-hidden="true">&#x1F4D6;&#xFE0E;</span>Read</span></button>
+      <button class="tab-btn" data-tab="feelings" aria-label="Feelings"><span class="tab-btn-inner"><span class="tab-icon" aria-hidden="true">&#x2764;&#xFE0E;</span>Feelings</span></button>
+      <button class="tab-btn" data-tab="community" aria-label="Journal"><span class="tab-btn-inner"><span class="tab-icon" aria-hidden="true">&#x270E;&#xFE0E;</span>Journal</span></button>
+      <button class="tab-btn" data-tab="me" aria-label="Me"><span class="tab-btn-inner"><span class="tab-icon" aria-hidden="true">&#x263A;&#xFE0E;</span>Me</span></button>
     </div>
   </div>
 </div>
@@ -5113,7 +5116,7 @@ function attachHandlers(){
 }
 
 document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.onclick = () => { state.tab = btn.dataset.tab; state.activeFeeling = null; render(); scrollAppToTop(); };
+  btn.onclick = () => { state.tab = btn.dataset.tab; state.activeFeeling = null; render(); scrollAppToTop(); const c=document.getElementById('content'); c.classList.remove('tab-fade'); void c.offsetWidth; c.classList.add('tab-fade'); };
 });
 
 // ============================================================
