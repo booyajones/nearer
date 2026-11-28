@@ -1660,6 +1660,11 @@
   .tab-btn:active{ transform:scale(0.94); }
   body.no-motion .tab-btn:active{ transform:none; }
   body.no-motion .mood-chip:active, body.no-motion .theme-opt:active, body.no-motion .settings-seg button:active, body.no-motion .heart-btn:active, body.no-motion .book-chip:active{ transform:none; }
+  /* ===== round 3: daily prayer card ===== */
+  .prayer-card{ margin:18px 20px 0; }
+  .prayer-card .eyebrow{ margin-bottom:8px; color:var(--gold); }
+  .prayer-text{ font-family:'Fraunces',serif; font-size:var(--fs-body); line-height:1.6; color:var(--ink); }
+  .prayer-amen{ margin-top:8px; font-family:'Fraunces',serif; font-style:italic; font-size:var(--fs-label); color:var(--charcoal-soft); }
 </style>
 </head>
 <body>
@@ -4107,6 +4112,29 @@ function last7Lit(){
 // ============================================================
 // RENDER: TODAY
 // ============================================================
+const MORNING_PRAYERS = [
+  "Lord, this is the day You have made. Before the noise begins, I give it back to You. Lead me in Your ways and keep my heart near Yours.",
+  "Father, Your mercies are new this morning. Help me walk humbly today, quick to listen and slow to anger.",
+  "Jesus, You are the light of the world. Shine on my path today, and let my words and work point others to You.",
+  "Holy Spirit, fill me before I face this day. Give me patience where I am weak and courage where I am afraid.",
+  "Lord, I commit my plans to You. Order my steps, and when I stumble, hold me up with Your right hand.",
+  "Father, teach me to number my days and use this one well. Let me love the people You put in front of me.",
+  "Lord, I rest in You before I rush. You are my shepherd; I shall not lack what I truly need today."
+];
+const EVENING_PRAYERS = [
+  "Lord, thank You for carrying me through this day. I lay down in peace and sleep, for You alone make me dwell in safety.",
+  "Father, where I fell short today, forgive me. Where I saw Your goodness, I thank You. Keep me through the night.",
+  "Jesus, I give You what I could not finish and what I cannot fix. Quiet my mind, and let me rest in Your care.",
+  "Lord, You neither slumber nor sleep. Watch over me and the ones I love tonight, and wake us to new mercy.",
+  "Father, thank You for every grace I noticed and every one I missed. Let my last thoughts tonight be of You.",
+  "Holy Spirit, search my heart before I sleep. Wash away what is not of You and leave Your peace in its place.",
+  "Lord, the day is done and You are still faithful. Into Your hands I commit my spirit, my worries, and my tomorrow."
+];
+function dailyPrayer(){
+  const d = new Date();
+  const evening = d.getHours() >= 17;
+  return { evening, text: (evening ? EVENING_PRAYERS : MORNING_PRAYERS)[d.getDay()] };
+}
 function renderToday(){
   const idx = dayOfYear() % DAILY_VERSES.length;
   const v = DAILY_VERSES[idx];
@@ -4138,6 +4166,12 @@ function renderToday(){
           : `whenever you're ready, a new day begins`}</div>
       </div>
     </div>
+
+    ${(() => { const pr = dailyPrayer(); return `<div class="card prayer-card" aria-label="${pr.evening?'Evening':'Morning'} prayer">
+      <div class="eyebrow">${pr.evening?'Evening prayer':'Morning prayer'}</div>
+      <div class="prayer-text">${escapeHtml(pr.text)}</div>
+      <div class="prayer-amen">Amen</div>
+    </div>`; })()}
 
     <div class="section">
       <div class="section-head">
