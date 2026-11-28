@@ -1665,6 +1665,9 @@
   .prayer-card .eyebrow{ margin-bottom:8px; color:var(--gold); }
   .prayer-text{ font-family:'Fraunces',serif; font-size:var(--fs-body); line-height:1.6; color:var(--ink); }
   .prayer-amen{ margin-top:8px; font-family:'Fraunces',serif; font-style:italic; font-size:var(--fs-label); color:var(--charcoal-soft); }
+  .share-btn{ background:transparent; color:var(--gold); border:1px solid color-mix(in srgb,var(--gold) 55%,transparent); }
+  .hero .share-btn{ color:#F7F1E1; border-color:rgba(255,255,255,0.35); }
+  .toast{ position:fixed; left:50%; bottom:calc(96px + env(safe-area-inset-bottom)); transform:translateX(-50%); background:var(--ink); color:var(--parchment); font-family:'Inter',sans-serif; font-size:var(--fs-label); padding:8px 16px; border-radius:999px; z-index:9999; box-shadow:var(--card-shadow); pointer-events:none; }
 </style>
 </head>
 <body>
@@ -4135,6 +4138,18 @@ function dailyPrayer(){
   const evening = d.getHours() >= 17;
   return { evening, text: (evening ? EVENING_PRAYERS : MORNING_PRAYERS)[d.getDay()] };
 }
+function showToast(msg){
+  const old = document.querySelector('.toast'); if(old) old.remove();
+  const t = document.createElement('div'); t.className='toast'; t.setAttribute('role','status'); t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(), 1800);
+}
+async function shareVerse(text, ref){
+  const body = text + ' \u2014 ' + ref + ' (WEB)';
+  if(navigator.share){ try{ await navigator.share({ text: body }); return; }catch(e){ if(e && e.name==='AbortError') return; } }
+  try{ await navigator.clipboard.writeText(body); }
+  catch(e){ const ta=document.createElement('textarea'); ta.value=body; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(_){} ta.remove(); }
+  showToast('Copied');
+}
 function renderToday(){
   const idx = dayOfYear() % DAILY_VERSES.length;
   const v = DAILY_VERSES[idx];
@@ -4155,6 +4170,7 @@ function renderToday(){
         <button class="btn ${checkedToday ? 'btn-ghost' : 'btn-primary'}" id="checkin-btn" ${checkedToday?'disabled':''}>
           ${checkedToday ? '✓ Read today' : "I read this today"}
         </button>
+        <button class="btn share-btn" id="share-today" aria-label="Share today's verse">Share</button>
       </div>
       <div class="wick">
         ${wick.map(l => `<div class="wick-dot ${l?'lit':''}"></div>`).join('')}
@@ -4479,6 +4495,7 @@ function renderSheet(){
         <textarea id="note-input" placeholder="What does this verse mean to you today?">${escapeHtml(ann.note||'')}</textarea>
         <div class="sheet-btns">
           <button class="btn btn-primary" id="save-annotation" style="flex:1;">Save</button>
+          ${ann.color ? `<button class="btn share-btn" id="share-sheet-verse" aria-label="Share this verse">Share</button>` : ''}
           <button class="btn btn-ghost" id="close-sheet" style="background:var(--parchment);color:var(--charcoal);border:1px solid var(--line);">Close</button>
         </div>
       </div>
@@ -4720,6 +4737,14 @@ function render(){
 }
 
 function attachHandlers(){
+  const shareToday = document.getElementById('share-today');
+  if(shareToday) shareToday.onclick = () => { const v = DAILY_VERSES[dayOfYear() % DAILY_VERSES.length]; shareVerse(v.text, v.ref); };
+  const shareSheet = document.getElementById('share-sheet-verse');
+  if(shareSheet) shareSheet.onclick = () => {
+    const k = state.sheetVerseKey, book = k.slice(0,k.lastIndexOf(':')), num = k.split(':').pop();
+    const e = BIBLE[book] && BIBLE[book].verses.find(v => String(v[0])===String(num));
+    if(e) shareVerse(e[1], book + ':' + num);
+  };
   const checkinBtn = document.getElementById('checkin-btn');
   if(checkinBtn) checkinBtn.onclick = checkIn;
 
